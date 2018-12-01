@@ -24,13 +24,17 @@ void Panel::advance() {
     } else {
       currentStep --;
     }
-  } 
+  }
+  
+  if (randomise && currentStep == 255 + bufferEnd) {
+    colorStart = (random(256) << 16 | random(256) << 8 | random(256));
+  }
 }
 
 uint32_t Panel::getNewColor() {
-  byte startRed = colorStart > 0 ? (colorStart >> 16) & 0xff : random(256);
-  byte startBlue = colorStart > 0 ? colorStart & 0xff : random(256);
-  byte startGreen = colorStart > 0 ? (colorStart >> 8) & 0xff : random(256);
+  byte startRed = (colorStart >> 16);
+  byte startBlue = colorStart & 0xff;
+  byte startGreen = (colorStart >> 8) & 0xff;
   byte endRed = (colorEnd >> 16) & 0xff;
   byte endBlue = colorEnd & 0xff;
   byte endGreen = (colorEnd >> 8) & 0xff;

@@ -10,7 +10,7 @@ class Panel {
     uint32_t getNewColor();
 
     Panel() {}
-    Panel(uint32_t _colorStart, uint32_t _colorEnd, int _bufferStart, int _bufferEnd, int _currentStep, bool _bounce) {
+    Panel(uint32_t _colorStart, uint32_t _colorEnd, int _bufferStart, int _bufferEnd, int _currentStep, bool _bounce, bool _randomise) {
       colorStart = _colorStart;
       colorEnd = _colorEnd;
       bufferStart = _bufferStart;
@@ -18,6 +18,7 @@ class Panel {
       bounce = _bounce;
       currentStep = _currentStep;
       currentlyForwards = false;
+      randomise = _randomise;
     }
     
   private:
@@ -28,6 +29,8 @@ class Panel {
     int currentStep;
     bool currentlyForwards;
     bool bounce;
+    bool randomise;
+    void colorChange();
 };
 
 #endif

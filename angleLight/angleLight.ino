@@ -48,7 +48,7 @@ Adafruit_NeoPixel Strip = Adafruit_NeoPixel(total_pixels, pinLED, NEO_GRB + NEO_
 
 void setup() {
   Strip.begin();
-  Strip.setBrightness(140);
+  Strip.setBrightness(200);
   turnOffAllPanels();
 
   pinMode(pinButton, INPUT_PULLUP);
@@ -92,6 +92,7 @@ int limitCheck(int input, int minimum, int maximum) {
 }
 
 void setPattern() {
+  Serial.println (activePattern);
   Pattern pattern = Pattern(activePattern);
   delayAmount = pattern.delayAmount;
   initPanels(pattern);
@@ -104,13 +105,14 @@ void initPanels(Pattern pattern) {
   int bufferStart = pattern.bufferStart;
   int bufferEnd = pattern.bufferEnd;
   bool bounce = pattern.bounce;
+  bool randomise = pattern.randomise;
   
   patternWidth = bounce ? patternWidth - 1 : patternWidth;
   int patternStep = 255 / patternWidth;
   int currentStep = 0;
 
   for (int panel = 0; panel < numberOfPanels; panel++) {
-    panels[panel] = Panel(colorStart, colorEnd, bufferStart, bufferEnd, currentStep, bounce);
+    panels[panel] = Panel(colorStart, colorEnd, bufferStart, bufferEnd, currentStep, bounce, randomise);
     currentStep = currentStep > 255 ? 0 : currentStep + patternStep; 
   }
 }
